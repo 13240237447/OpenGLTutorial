@@ -6,80 +6,85 @@ public class HelloTriangle : ILesson
 {
     public int Level => 1;
     
-    public void Run()
+    public object PrepareData()
     {
-        //初始化Graphics Library Framework
-        Glfw.Init();
-        //设置版本号
-        Glfw.WindowHint(Hint.ContextVersionMajor,3);
-        Glfw.WindowHint(Hint.ContextVersionMinor,3);
-        //设置OpenGL的渲染模式为核心渲染
-        Glfw.WindowHint(Hint.OpenglProfile,Profile.Core);
-        
-        var window = Util.CreateWindow(this,800,600);
-        
         var vao = CreateVAO();
-        
-        Util.UseShader(this);
 
-        while (!Glfw.WindowShouldClose(window))
-        {
-            ProcessInput(window);
-         
-            glClearColor(.2f,.3f,.3f,1);
-            glClear(GL_COLOR_BUFFER_BIT);
-            
-            glBindVertexArray(vao);
-            glDrawArrays(GL_TRIANGLES,0,3);
-       
-            
-            Glfw.SwapBuffers(window);
-            Glfw.PollEvents();
-        }
+        Util.UseShader(this);
         
-        Glfw.Terminate();
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+
+        return vao;
     }
-    
+
+    public unsafe void Draw(object data)
+    {
+        //绑定顶点数组
+        glBindVertexArray((uint)data);
+        //绘制顶点数据
+        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,(void *)0);
+
+    }
 
     float[] GetTriangleArray()
     {
         return new[]
         {
+            -0.5f,0.5f,0,
             -0.5f,-0.5f,0,
+            0.5f,0.5f,0,
             0.5f,-0.5f,0,
-            0f,0.5f,0
         };
     }
 
+    int[] GetIndices()
+    {
+        return new[]
+        {
+            0,1,2,
+            1,2,3
+        };
+    }
+    
+
     private unsafe uint CreateVAO()
     {
-        //1绑定vao
+        //申请顶点缓存vao
         var vao = glGenVertexArray();
         glBindVertexArray(vao);
-        
-        
+        /*
+         * vao可以理解成对多个vbo的封装
+         * 它可以储存针对每个vbo属性的特殊操作
+         */
+        //申请一块buffer
         var vbo = glGenBuffer();
-        var data = GetTriangleArray();
+        var vertexData = GetTriangleArray();
+        //将buffer设置为VBO类型
+        //从这一刻起 使用的任何在GL_ARRAY_BUFFER目标上的缓冲调用都会用来配置当前绑定的VBO
         glBindBuffer(GL_ARRAY_BUFFER,vbo);
-        fixed (float* p = data)
+        fixed (float* p = vertexData)
         {
-            glBufferData(GL_ARRAY_BUFFER,sizeof(float) *data.Length,p,GL_STATIC_DRAW);
+            //将顶点数据复制到缓冲的内存中
+            glBufferData(GL_ARRAY_BUFFER,sizeof(float) *vertexData.Length,p,GL_STATIC_DRAW);
         }
+        //跟gpu解释如何使用这些顶点数据
         glVertexAttribPointer(0,3,GL_FLOAT,false,3*sizeof(float),NULL);
+
+        //申请索引缓存ibo
+        var ibo = glGenBuffer();
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
+        var indicesData = GetIndices();
+        fixed (int* p = indicesData)
+        {
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(int) * indicesData.Length,p,GL_STATIC_DRAW);
+        }
+        
+        //启用顶点属性
         glEnableVertexAttribArray(0);
      
+        //解绑vao 供其它使用
+        glBindVertexArray(0);
         return vao;
     }
     
-    void ProcessInput(Window window)
-    {
-        if (Glfw.GetKey(window,Keys.Escape) == InputState.Press)
-        {
-            Glfw.SetWindowShouldClose(window,true);
-        }
-    }
-   
-    public void ShutDown()
-    {
-    }
 }

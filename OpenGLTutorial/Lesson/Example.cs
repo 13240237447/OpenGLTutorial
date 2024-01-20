@@ -3,7 +3,7 @@ namespace OpenGL;
 using GLFW;
 using static OpenGL.GL;
 
-public class Example : ILesson
+public class Example
 {
     /// <summary>
     /// Obligatory name for your first OpenGL example program.

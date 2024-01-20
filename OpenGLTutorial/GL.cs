@@ -407,15 +407,19 @@ namespace OpenGL
         /// <summary>
         ///     Creates and initializes a buffer object's data store.
         /// </summary>
-        /// <param name="target">Specifies the target to which the buffer object is bound.</param>
-        /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
+        /// <param name="target">Specifies the target to which the buffer object is bound.
+        /// 目标缓冲的类型</param>
+        /// <param name="size">Specifies the size in bytes of the buffer object's new data store.
+        /// 传输数据的大小</param>
         /// <param name="data">
         ///     Specifies a pointer to data that will be copied into the data store for initialization, or NULL if
         ///     no data is to be copied.
+        ///     数据的地址
         /// </param>
         /// <param name="usage">
         ///     Specifies the expected usage pattern of the data store.
-        ///     <para>
+        ///     希望显卡如何管理给定的数据 通过访问频率决定在内存中的位置
+        /// <para>
         ///         Must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY,
         ///         GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY.
         ///     </para>
@@ -539,14 +543,20 @@ namespace OpenGL
 
         /// <summary>
         ///     Render primitives from array data.
+        ///     用数组数据绘制图元
         /// </summary>
-        /// <param name="mode">Specifies what kind of primitives to render.</param>
-        /// <param name="count">Specifies the number of elements to be rendered.</param>
+        /// <param name="mode">Specifies what kind of primitives to render.
+        ///     指定图元类型</param>
+        /// <param name="count">Specifies the number of elements to be rendered.
+        ///     指定绘制元素的个数</param>
         /// <param name="type">
         ///     Specifies the type of the values in indices.
+        ///     指定每个值的类型 三选一
         ///     <para>Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.</para>
         /// </param>
-        /// <param name="indices">Specifies a pointer to the location where the indices are stored.</param>
+        /// <param name="indices">Specifies a pointer to the location where the indices are stored.
+        ///     指定索引绘制的指针
+        /// </param>
         public static void glDrawElements(int mode, int count, int type, /*const*/ void* indices) => _glDrawElements(mode, count, type, indices);
 
         /// <summary>
@@ -5011,23 +5021,29 @@ namespace OpenGL
         /// <summary>
         ///     Define an array of generic vertex attribute data
         /// </summary>
-        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.
+        /// 指定要修改泛型顶点熟悉的索引(layout(location= = 0))</param>
         /// <param name="size">
         ///     Specifies the number of components per generic vertex attribute.
+        /// 指定每个泛型顶点属性的大小
         ///     <para>Must be 1, 2, 3, 4, or <see cref="GL_BGRA" />.</para>
         /// </param>
-        /// <param name="type">Specifies the data type of each component in the array.</param>
+        /// <param name="type">Specifies the data type of each component in the array.
+        /// 指定数组数据中每个分量的类型</param>
         /// <param name="normalized">
         ///     Specifies whether fixed-point data values should be normalized (true) or converted directly as
         ///     fixed-point values (false) when they are accessed.
+        /// 是否要被标准化
         /// </param>
         /// <param name="stride">
         ///     Specifies the byte offset between consecutive generic vertex attributes.
+        ///     指定连续两个顶点属性之间的字节偏移量
         ///     <para>If stride is 0, the generic vertex attributes are understood to be tightly packed in the array.</para>
         /// </param>
         /// <param name="pointer">
         ///     Specifies a offset of the first component of the first generic vertex attribute in the array in
         ///     the data store of the buffer currently bound to the GL_ARRAY_BUFFER target.
+        ///      第一个顶点属性在buffer中的偏移量
         /// </param>
         public static void glVertexAttribPointer(uint index, int size, int type, bool normalized, int stride, /*const*/void* pointer) => _glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 

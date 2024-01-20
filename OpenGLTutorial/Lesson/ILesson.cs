@@ -4,7 +4,8 @@ public interface ILesson
 {
     int Level { get; }
 
-    void Run();
+    object PrepareData();
 
-    void ShutDown();
+    void Draw(object data);
+
 }

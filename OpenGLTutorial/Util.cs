@@ -29,6 +29,22 @@ public static class Util
         return window;
     }
 
+
+    public static uint UseShader(ILesson lesson)
+    {
+        var vertex = CreateVertexShader(lesson);
+        var fragment = CreateFragmentShader(lesson);
+        var program = glCreateProgram();
+        glAttachShader(program,vertex);
+        glAttachShader(program,fragment);
+        glLinkProgram(program);
+        LogProgram(program);
+        glUseProgram(program);
+        glDeleteShader(vertex);
+        glDeleteShader(fragment);
+        return program;
+    }
+    
     private static uint CreateVertexShader(ILesson lesson)
     {
         var shader = glCreateShader(GL_VERTEX_SHADER);
@@ -47,21 +63,6 @@ public static class Util
         glCompileShader(shader);
         LogShader(shader);
         return shader;
-    }
-
-    public static uint UseShader(ILesson lesson)
-    {
-        var vertex = CreateVertexShader(lesson);
-        var fragment = CreateFragmentShader(lesson);
-        var program = glCreateProgram();
-        glAttachShader(program,vertex);
-        glAttachShader(program,fragment);
-        glLinkProgram(program);
-        LogProgram(program);
-        glUseProgram(program);
-        glDeleteShader(vertex);
-        glDeleteShader(fragment);
-        return program;
     }
 
     private static unsafe void LogShader(uint shader)
