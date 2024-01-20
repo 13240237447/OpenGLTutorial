@@ -10,7 +10,7 @@ public class Lesson2_Shader : ILesson
     
     public ELessonRun LessonRun { get; set; }
     
-    private uint shaderProgram;
+    private Shader shaderProgram;
 
     public Lesson2_Shader()
     {
@@ -37,7 +37,7 @@ public class Lesson2_Shader : ILesson
     private object P1()
     {
         var vao = CreateVAO_P1();
-        shaderProgram = GLUtil.UseShader(this,"_2","_2");
+        shaderProgram = new Shader(this,"_2","_2");
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
         return vao;;
     }
@@ -58,11 +58,10 @@ public class Lesson2_Shader : ILesson
 
     private void MainDraw(object data)
     {
-        shaderProgram = GLUtil.UseShader(this);
+        shaderProgram = new Shader(this);
         var time = Glfw.Time;
         var s = MathF.Sin((float)time) / 2 + 0.5f;
-        var location = glGetUniformLocation(shaderProgram, "fragmentCol");
-        glUniform4f(location,s,0,0,1);
+        shaderProgram.SetFloat("fragmentCol",new []{s,0,0,1});
         glBindVertexArray((uint)data);
         glDrawArrays(GL_TRIANGLES,0,3);
     }

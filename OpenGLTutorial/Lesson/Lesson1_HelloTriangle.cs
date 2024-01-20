@@ -35,7 +35,7 @@ public class HelloTriangle : ILesson
     {
         var vao = CreateVAO();
 
-        GLUtil.UseShader(this);
+        new Shader(this).Use();
         
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
@@ -46,7 +46,7 @@ public class HelloTriangle : ILesson
     {
         var vao = CreateVAO_P1();
 
-        GLUtil.UseShader(this);
+        new Shader(this).Use();
         
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
@@ -58,7 +58,7 @@ public class HelloTriangle : ILesson
         var vao1 = CreateVAO_P2_1();
         var vao2 = CreateVAO_P2_1();
         
-        GLUtil.UseShader(this);
+        new Shader(this).Use();
         
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
         
@@ -91,15 +91,16 @@ public class HelloTriangle : ILesson
             case ELessonRun.P3:
                 if (frameCount < 100)
                 {
-                    GLUtil.UseShader(this);
+                    using (new Shader(this))
+                    {
+                        
+                    }
                 }
                 else
                 {
-                    GLUtil.UseShader(this,"","_red");
+                    new Shader(this,"","_red").Use();
                 }
-
                 frameCount++;
-
                 if (frameCount > 200)
                 {
                     frameCount = 0;
