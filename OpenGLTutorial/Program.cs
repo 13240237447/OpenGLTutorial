@@ -6,9 +6,9 @@ using static OpenGL.GL;
 
 class Program
 {
-    static void Main(string[] args)
+    static unsafe void Main(string[] args)
     {
-        var lesson = GetLesson(1);
+        var lesson = GetLesson(2);
         {
             //初始化Graphics Library Framework
             Glfw.Init();
@@ -18,7 +18,8 @@ class Program
             //设置OpenGL的渲染模式为核心渲染
             Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
 
-            var window = Util.CreateWindow(lesson, 800, 600);
+
+            var window = GLUtil.CreateWindow(lesson, 800, 600);
 
             var data = lesson.PrepareData();
 

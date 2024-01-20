@@ -4,7 +4,7 @@ using static OpenGL.GL;
 
 namespace OpenGL;
 
-public static class Util
+public static class GLUtil
 {
     public static Window CreateWindow(ILesson lesson,int width, int height)
     {
@@ -30,10 +30,10 @@ public static class Util
     }
 
 
-    public static uint UseShader(ILesson lesson)
+    public static uint UseShader(ILesson lesson,string vertexSuffix = "",string fragmentSuffix ="")
     {
-        var vertex = CreateVertexShader(lesson);
-        var fragment = CreateFragmentShader(lesson);
+        var vertex = CreateVertexShader(lesson,vertexSuffix);
+        var fragment = CreateFragmentShader(lesson,fragmentSuffix);
         var program = glCreateProgram();
         glAttachShader(program,vertex);
         glAttachShader(program,fragment);
@@ -45,20 +45,20 @@ public static class Util
         return program;
     }
     
-    private static uint CreateVertexShader(ILesson lesson)
+    private static uint CreateVertexShader(ILesson lesson,string suffix = "")
     {
         var shader = glCreateShader(GL_VERTEX_SHADER);
-        var shaderPath = $"Shader/{lesson.Level}/vertex.glsl";
+        var shaderPath = $"Shader/{lesson.Level}/vertex{suffix}.glsl";
         glShaderSource(shader,ReadShader(shaderPath));
         glCompileShader(shader);
         LogShader(shader);
         return shader;
     }
     
-    private static uint CreateFragmentShader(ILesson lesson)
+    private static uint CreateFragmentShader(ILesson lesson,string suffix = "")
     {
         var shader = glCreateShader(GL_FRAGMENT_SHADER);
-        var shaderPath = $"Shader/{lesson.Level}/fragment.glsl";
+        var shaderPath = $"Shader/{lesson.Level}/fragment{suffix}.glsl";
         glShaderSource(shader,ReadShader(shaderPath));
         glCompileShader(shader);
         LogShader(shader);
@@ -72,10 +72,9 @@ public static class Util
         {
             glGetShaderiv(shader, GL_COMPILE_STATUS,pArgs);
             int result = *pArgs;
-            Console.WriteLine($"ShaderCompile Result: {result}");
-            if (result > 0)
+            if (result != 1)
             {
-                Console.WriteLine($"Error Info: {glGetShaderInfoLog(shader)}");
+                Console.WriteLine($"ShaderCompile Error Info: {glGetShaderInfoLog(shader)}");
             }
         }
     }
@@ -87,10 +86,9 @@ public static class Util
         {
             glGetProgramiv(program, GL_LINK_STATUS, pArgs);
             int result = *pArgs;
-            Console.WriteLine($"ProgramLink Result: {result}");
-            if (result > 0)
+            if (result != 1)
             {
-                Console.WriteLine($"Error Info: {glGetProgramInfoLog(program)}");
+                Console.WriteLine($"ProgramLink Error Info: {glGetProgramInfoLog(program)}");
             }
         }
     }
