@@ -1,3 +1,5 @@
+using GLFW;
+
 namespace OpenGL;
 
 using static OpenGL.GL;
@@ -11,14 +13,32 @@ public class Lesson3_Texture : ILesson
     private Texture2D texture2D0;
 
     private Texture2D texture2D1;
+
+    private Shader shader;
+
+    public Lesson3_Texture()
+    {
+        LessonRun = ELessonRun.P2;
+    }
+    
     public object PrepareData()
     {
-        
+        switch (LessonRun)
+        {
+            case ELessonRun.P2:
+                return PrepareDataToP2();
+        }
         return PrepareDataToMain();
     }
 
     public unsafe void Draw(object data)
     {
+        var time = (float)Glfw.Time % 1 ;
+
+        var rate = MathF.Sin(time) / 2 + 0.5f;
+        
+        shader.SetFloat("mixRate",rate);
+       
         glBindVertexArray((uint)data);
         
         glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,(void*)(0));
@@ -31,7 +51,28 @@ public class Lesson3_Texture : ILesson
         texture2D1 = new Texture2D("awesomeface.png");
         
         uint vao = CreateMainVAO();
-        var shader = new Shader(this);
+        shader = new Shader(this);
+
+       
+        shader.SetInt("texture1",0);
+        shader.SetInt("texture2",1);
+        
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D,texture2D0.Tex);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D,texture2D1.Tex);
+        
+        return vao;
+    }
+
+    private object PrepareDataToP2()
+    {
+        texture2D0 = new Texture2D("container.jpg");
+        texture2D1 = new Texture2D("awesomeface.png");
+        
+        uint vao = CreateMainVAO();
+        shader = new Shader(this,"_2","_2");
 
        
         shader.SetInt("texture1",0);

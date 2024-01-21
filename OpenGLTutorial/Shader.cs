@@ -6,24 +6,17 @@ public class Shader : IDisposable
     private uint vertexShader;
     private uint fragmentShader;
     private uint program;
-    private bool bUse;
 
     public uint Program => program;
     public Shader(ILesson lesson, string vertexSuffix = "", string fragmentSuffix = "")
     {
         vertexShader = CreateVertexShader(lesson, vertexSuffix);
         fragmentShader = CreateFragmentShader(lesson, fragmentSuffix);
-        Use();
+        CreateProgram();
     }
 
-    public void Use()
+    private void CreateProgram()
     {
-        if (bUse)
-        {
-            return;
-        }
-
-        bUse = true;
         program = glCreateProgram();
         glAttachShader(program, vertexShader);
         glAttachShader(program, fragmentShader);
@@ -34,12 +27,14 @@ public class Shader : IDisposable
         glUseProgram(program);
     }
 
+    public void Use()
+    {
+        glUseProgram(program);
+    }
+
     public void Dispose()
     {
-        if (bUse)
-        {
-            glDeleteProgram(program);
-        }
+        glDeleteProgram(program);
     }
 
     public void SetFloat(string uniformName,params float[] values)
