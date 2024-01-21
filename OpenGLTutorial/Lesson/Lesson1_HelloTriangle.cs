@@ -179,6 +179,9 @@ public class HelloTriangle : ILesson
         //跟gpu解释如何使用这些顶点数据
         glVertexAttribPointer(0,3,GL_FLOAT,false,3*sizeof(float),NULL);
 
+        //启用顶点属性
+        glEnableVertexAttribArray(0);
+        
         //申请索引缓存ibo
         var ibo = glGenBuffer();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
@@ -187,9 +190,6 @@ public class HelloTriangle : ILesson
         {
             glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(int) * indicesData.Length,p,GL_STATIC_DRAW);
         }
-        
-        //启用顶点属性
-        glEnableVertexAttribArray(0);
      
         //解绑vao 供其它使用
         glBindVertexArray(0);

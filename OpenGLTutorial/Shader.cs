@@ -8,6 +8,7 @@ public class Shader : IDisposable
     private uint program;
     private bool bUse;
 
+    public uint Program => program;
     public Shader(ILesson lesson, string vertexSuffix = "", string fragmentSuffix = "")
     {
         vertexShader = CreateVertexShader(lesson, vertexSuffix);
@@ -41,7 +42,7 @@ public class Shader : IDisposable
         }
     }
 
-    public void SetFloat(string uniformName, float[] values)
+    public void SetFloat(string uniformName,params float[] values)
     {
         var location = glGetUniformLocation(program, uniformName);
         if (location >= 0)
@@ -68,7 +69,7 @@ public class Shader : IDisposable
         }
     }
 
-    public void SetInt(string uniformName, int[] values)
+    public void SetInt(string uniformName, params int[] values)
     {
         var location = glGetUniformLocation(program, uniformName);
         if (location >= 0)
@@ -95,7 +96,7 @@ public class Shader : IDisposable
         }
     }
     
-    public void SetBool(string uniformName, bool[] bools)
+    public void SetBool(string uniformName,params bool[] bools)
     {
         var location = glGetUniformLocation(program, uniformName);
         int[] values = new int[bools.Length];

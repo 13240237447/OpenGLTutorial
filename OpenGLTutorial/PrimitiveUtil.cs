@@ -40,4 +40,25 @@ public static class PrimitiveUtil
             0.5f,-0.5f,0,         1,0
         };
     }
+    
+
+    public static float[] GetRectArrayWithTexCoords()
+    {
+        return new[]
+        {
+            -0.5f,0.5f,0,       0,1,
+            -0.5f,-0.5f,0,      0,0,
+            0.5f,0.5f,0,        1,1,
+            0.5f,-0.5f,0,       1,0
+        };
+    }
+    
+    public static int[] GetRectIndices()
+    {
+        return new[]
+        {
+            0,1,2,
+            1,2,3
+        };
+    }
 }
