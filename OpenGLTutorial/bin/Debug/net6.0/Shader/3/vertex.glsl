@@ -1,9 +1,10 @@
 #version 330 core
 layout (location = 0) in vec3 aPos;
-out vec4 fragmentColor;
+layout (location = 1) in vec2 texCoods;
 
+out vec2 outTexCoods;
 void main()
 {
     gl_Position = vec4(aPos.x,aPos.y,aPos.z,1.0f);
-    fragmentColor = gl_Position;
+    outTexCoods = texCoods;
 }

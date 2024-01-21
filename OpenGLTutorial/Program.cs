@@ -8,7 +8,12 @@ class Program
 {
     static unsafe void Main(string[] args)
     {
-        var lesson = GetLesson(2);
+        LoadLesson(3);
+    }
+
+    private static void LoadLesson(int id)
+    {
+        var lesson = GetLesson(id);
         {
             //初始化Graphics Library Framework
             Glfw.Init();
@@ -39,6 +44,12 @@ class Program
 
             Glfw.Terminate();
         }
+    }
+
+    private static void Test()
+    {
+     
+
     }
 
     private static ILesson GetLesson(int id)

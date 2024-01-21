@@ -127,6 +127,18 @@ public class Shader : IDisposable
         }
     }
 
+    public void SetTexture(string uniformName)
+    {
+        var location = glGetUniformLocation(program, uniformName);
+        if (location >= 0)
+        {
+        }
+        else
+        {
+            Console.WriteLine($"未找到uniform名为{uniformName}的位置");
+        }
+    }
+
 
     private uint CreateVertexShader(ILesson lesson, string suffix = "")
     {

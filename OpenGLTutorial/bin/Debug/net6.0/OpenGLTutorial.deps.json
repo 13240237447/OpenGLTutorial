@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "OpenGLTutorial/1.0.0": {
         "dependencies": {
-          "GLFW.NET": "1.0.1.0"
+          "GLFW.NET": "1.0.1.0",
+          "Stb.Native": "1.0.8786.524"
         },
         "runtime": {
           "OpenGLTutorial.dll": {}
@@ -21,6 +22,14 @@
             "fileVersion": "1.0.1.0"
           }
         }
+      },
+      "Stb.Native/1.0.8786.524": {
+        "runtime": {
+          "Stb.Native.dll": {
+            "assemblyVersion": "1.0.8786.524",
+            "fileVersion": "0.0.0.0"
+          }
+        }
       }
     }
   },
@@ -31,6 +40,11 @@
       "sha512": ""
     },
     "GLFW.NET/1.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Stb.Native/1.0.8786.524": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

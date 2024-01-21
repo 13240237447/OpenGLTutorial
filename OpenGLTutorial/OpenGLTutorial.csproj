@@ -12,6 +12,12 @@
       <Reference Include="GLFW.NET">
         <HintPath>GLFW.NET.dll</HintPath>
       </Reference>
+      <Reference Include="Stb.Native">
+        <HintPath>Stb.Native.dll</HintPath>
+      </Reference>
+      <Reference Include="StbImageSharp">
+        <HintPath>StbImageSharp.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

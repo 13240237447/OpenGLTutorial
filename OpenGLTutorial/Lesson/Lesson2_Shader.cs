@@ -14,7 +14,7 @@ public class Lesson2_Shader : ILesson
 
     public Lesson2_Shader()
     {
-        LessonRun = ELessonRun.P1;
+        LessonRun = ELessonRun.P2;
     }
     public object PrepareData()
     {
@@ -22,6 +22,8 @@ public class Lesson2_Shader : ILesson
         {
             case ELessonRun.P1:
                 return P1();
+            case ELessonRun.P2:
+                return P2();
         }
         return Main();
     }
@@ -37,7 +39,15 @@ public class Lesson2_Shader : ILesson
     private object P1()
     {
         var vao = CreateVAO_P1();
+        shaderProgram = new Shader(this,"_1","_1");
+        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+        return vao;;
+    }
+
+    private object P2()
+    {
         shaderProgram = new Shader(this,"_2","_2");
+        var vao = CreateVAO();
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
         return vao;;
     }
@@ -52,7 +62,9 @@ public class Lesson2_Shader : ILesson
             case ELessonRun.P1:
                 P1Draw(data);
                 break;
-
+            case ELessonRun.P2:
+                P2Draw(data);
+                break;
         }
     }
 
@@ -67,6 +79,12 @@ public class Lesson2_Shader : ILesson
     }
 
     private void P1Draw(object data)
+    {
+        glBindVertexArray((uint)data);
+        glDrawArrays(GL_TRIANGLES,0,3);
+    }
+
+    private void P2Draw(object data)
     {
         glBindVertexArray((uint)data);
         glDrawArrays(GL_TRIANGLES,0,3);
