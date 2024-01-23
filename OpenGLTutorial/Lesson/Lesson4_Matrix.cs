@@ -31,6 +31,11 @@ public class Lesson4_Matrix : ILesson
         glBindVertexArray((uint)data);
         
         glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,(void*)(0));
+        
+        shader.SetMatrix("transform", CreateTransformMat2());
+
+        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,(void*)(0));
+
     }
     
     private object PrepareDataToMain()
@@ -62,9 +67,20 @@ public class Lesson4_Matrix : ILesson
 
         //绕着z轴顺时针旋转90(右手坐标系 实际上正面看是逆时针转了90)
         // m = glm.rotate(m, glm.radians(90), new vec3(0, 0, 1));
+        m = glm.translate(m, new vec3(0.5f, -0.5f, 0));
         m = glm.rotate(m, (float)Glfw.Time, new vec3(0, 0, 1));
 
-        m = glm.scale(m, new vec3(0.5f, 0.5f, 0.5f));
+        return m;
+    }
+    
+    private mat4 CreateTransformMat2()
+    {
+        mat4 m = new mat4(1);
+
+        //绕着z轴顺时针旋转90(右手坐标系 实际上正面看是逆时针转了90)
+        // m = glm.rotate(m, glm.radians(90), new vec3(0, 0, 1));
+        m = glm.translate(m, new vec3(-0.5f, 0.5f, 0));
+        m = glm.scale(m, (MathF.Sin((float)Glfw.Time) / 2 +0.5f) * new vec3(1,1,1));
         return m;
     }
     
