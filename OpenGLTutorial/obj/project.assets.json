@@ -1,11 +1,37 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "GlmNet/0.7.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/GlmNet.dll": {}
+        },
+        "runtime": {
+          "lib/net40/GlmNet.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "GlmNet/0.7.0": {
+      "sha512": "g3EFJOV89dWppRVT5PJ8nVYWSEIoB4yqqEZy71ryb3mfxSGrvwqxsF+XbK+J0jUgSwRIYEWHqodvtd3LchlE+w==",
+      "type": "package",
+      "path": "glmnet/0.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "glmnet.0.7.0.nupkg.sha512",
+        "glmnet.nuspec",
+        "lib/net40/GlmNet.XML",
+        "lib/net40/GlmNet.dll"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "GlmNet >= 0.7.0"
+    ]
   },
   "packageFolders": {
     "F:\\Users\\shayi\\.nuget\\packages\\": {}
@@ -45,6 +71,12 @@
     "frameworks": {
       "net6.0": {
         "targetAlias": "net6.0",
+        "dependencies": {
+          "GlmNet": {
+            "target": "Package",
+            "version": "[0.7.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -64,5 +96,17 @@
         "runtimeIdentifierGraphPath": "F:\\Program Files\\dotnet\\sdk\\6.0.412\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'GlmNet 0.7.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "GlmNet",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

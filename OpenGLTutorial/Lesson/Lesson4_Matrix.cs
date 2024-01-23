@@ -1,50 +1,38 @@
-using GLFW;
+using GlmNet;
 
 namespace OpenGL;
+using GLFW;
+
 
 using static OpenGL.GL;
 
-public class Lesson3_Texture : ILesson
+public class Lesson4_Matrix : ILesson
 {
-    public int Level => 3;
+    public int Level => 4;
     
     public ELessonRun LessonRun { get; set; }
-
+    
+    
     private Texture2D texture2D0;
 
     private Texture2D texture2D1;
 
     private Shader shader;
-
-    public Lesson3_Texture()
-    {
-        LessonRun = ELessonRun.P2;
-    }
     
     public object PrepareData()
     {
-        switch (LessonRun)
-        {
-            case ELessonRun.P2:
-                return PrepareDataToP2();
-        }
         return PrepareDataToMain();
     }
 
     public unsafe void Draw(object data)
     {
-        var time = (float)Glfw.Time % 1 ;
+        shader.SetMatrix("transform", CreateTransformMat());
 
-        var rate = MathF.Sin(time) / 2 + 0.5f;
-        
-        shader.SetFloat("mixRate",rate);
-       
         glBindVertexArray((uint)data);
         
         glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,(void*)(0));
     }
-
-
+    
     private object PrepareDataToMain()
     {
         texture2D0 = new Texture2D("container.jpg");
@@ -56,8 +44,8 @@ public class Lesson3_Texture : ILesson
        
         shader.SetInt("texture1",0);
         shader.SetInt("texture2",1);
-        
-        
+
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D,texture2D0.Tex);
 
@@ -67,27 +55,19 @@ public class Lesson3_Texture : ILesson
         return vao;
     }
 
-    private object PrepareDataToP2()
+
+    private mat4 CreateTransformMat()
     {
-        texture2D0 = new Texture2D("container.jpg");
-        texture2D1 = new Texture2D("awesomeface.png");
-        
-        uint vao = CreateMainVAO();
-        shader = new Shader(this,"_2","_2");
+        mat4 m = new mat4(1);
 
-       
-        shader.SetInt("texture1",0);
-        shader.SetInt("texture2",1);
-        
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D,texture2D0.Tex);
+        //绕着z轴顺时针旋转90(右手坐标系 实际上正面看是逆时针转了90)
+        // m = glm.rotate(m, glm.radians(90), new vec3(0, 0, 1));
+        m = glm.rotate(m, (float)Glfw.Time, new vec3(0, 0, 1));
 
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D,texture2D1.Tex);
-        
-        return vao;
+        m = glm.scale(m, new vec3(0.5f, 0.5f, 0.5f));
+        return m;
     }
-
+    
     private unsafe uint CreateMainVAO()
     {
         var vao = glGenVertexArray();
@@ -121,4 +101,5 @@ public class Lesson3_Texture : ILesson
         glBindVertexArray(0);
         return vao;
     }
+
 }

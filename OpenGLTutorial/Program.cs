@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using GLFW;
+using GlmNet;
 using OpenGL;
 using static OpenGL.GL;
 
@@ -8,7 +9,8 @@ class Program
 {
     static unsafe void Main(string[] args)
     {
-        LoadLesson(3);
+        // Test();
+        LoadLesson(4);
     }
 
     private static void LoadLesson(int id)
@@ -48,8 +50,11 @@ class Program
 
     private static void Test()
     {
-     
-
+        vec4 v = new vec4(1, 0,0,1);
+        mat4 mat4 = new mat4(1);
+        var trans = glm.translate(mat4, new vec3(1,1,0));
+        v = trans * v;
+        Console.WriteLine(v);
     }
 
     private static ILesson GetLesson(int id)

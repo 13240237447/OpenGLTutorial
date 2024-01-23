@@ -1,3 +1,5 @@
+using GlmNet;
+
 namespace OpenGL;
 using static OpenGL.GL;
 
@@ -128,6 +130,23 @@ public class Shader : IDisposable
         var location = glGetUniformLocation(program, uniformName);
         if (location >= 0)
         {
+        }
+        else
+        {
+            Console.WriteLine($"未找到uniform名为{uniformName}的位置");
+        }
+    }
+
+    public unsafe void SetMatrix(string uniformName,mat4 mat)
+    {
+        var location = glGetUniformLocation(program, uniformName);
+        if (location >= 0)
+        {
+            var array = mat.to_array();
+            fixed (float* p = array)
+            {
+                glUniformMatrix4fv(location,1,false,p);
+            }
         }
         else
         {
