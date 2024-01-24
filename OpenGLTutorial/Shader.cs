@@ -155,6 +155,14 @@ public class Shader : IDisposable
     }
 
 
+    public void SetMVP(mat4 model, mat4 view, mat4 projection)
+    {
+        SetMatrix("model",model);
+        SetMatrix("view",view);
+        SetMatrix("projection",projection);
+    }
+
+
     private uint CreateVertexShader(ILesson lesson, string suffix = "")
     {
         var shader = glCreateShader(GL_VERTEX_SHADER);

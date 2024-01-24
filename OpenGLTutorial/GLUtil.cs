@@ -29,5 +29,11 @@ public static class GLUtil
         return window;
     }
 
+
+    public static float GetScreenAspect()
+    {
+        var screen = Glfw.PrimaryMonitor.WorkArea;
+        return screen.Width * 1.0f / screen.Height;
+    }
     
 }
