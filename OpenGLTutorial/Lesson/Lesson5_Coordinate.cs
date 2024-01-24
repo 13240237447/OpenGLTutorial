@@ -20,15 +20,35 @@ public class Lesson5_Coordinate : ILesson
 
     public object PrepareData()
     {
+        glEnable(GL_DEPTH_TEST);
         return PrepareDataToMain();
     }
 
     public unsafe void Draw(object data)
     {
-
-        glBindVertexArray((uint)data);
-
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(0));
+        var cubePos = GetCubePos();
+        for (int i = 0; i < cubePos.Length; i++)
+        {
+            mat4 m = new mat4(1);
+            m = glm.translate(m, cubePos[i]);
+            float angle = 20.0f * i;
+            if (i == 0)
+            {
+                m = glm.rotate(m,  (float)Glfw.Time,  new (1.0f, 0.3f, 0.5f));
+            }
+            if (i % 3 == 0)
+            {
+                m = glm.rotate(m,  (float)Glfw.Time*glm.radians(angle),  new (1.0f, 0.3f, 0.5f));
+            }
+            else
+            {
+                m = glm.rotate(m, glm.radians(angle),  new (1.0f, 0.3f, 0.5f));
+            }
+            shader.SetMVP(m,CreateViewMat4(),CreateProjectionMat4());
+            glBindVertexArray((uint)data);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+      
     }
 
     private object PrepareDataToMain()
@@ -43,7 +63,6 @@ public class Lesson5_Coordinate : ILesson
         shader.SetInt("texture1", 0);
         shader.SetInt("texture2", 1);
 
-        shader.SetMVP(CreateModelMat4(),CreateViewMat4(),CreateProjectionMat4());
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture2D0.Tex);
@@ -59,7 +78,7 @@ public class Lesson5_Coordinate : ILesson
     {
         mat4 m = new mat4(1);
 
-        m = glm.rotate(m, glm.radians(-55), new vec3(1, 0, 0));
+        m = glm.rotate(m, (float)Glfw.Time * glm.radians(50), new vec3(0.5f, 1, 0));
 
         return m;
     }
@@ -73,9 +92,8 @@ public class Lesson5_Coordinate : ILesson
     
     private mat4 CreateProjectionMat4()
     {
-        return glm.perspective(45, GLUtil.GetScreenAspect(), 0.1f, 100f);
+        return glm.perspective(glm.radians(45), GLUtil.GetScreenAspect(), 0.1f, 100f);
     }
-    
     
     private unsafe uint CreateMainVAO()
     {
@@ -85,7 +103,7 @@ public class Lesson5_Coordinate : ILesson
         var vbo = glGenBuffer();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-        var vertexData = PrimitiveUtil.GetRectArrayWithTexCoords();
+        var vertexData = PrimitiveUtil.GetCubeVertices();
         fixed (float* p = vertexData)
         {
             glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexData.Length, p, GL_STATIC_DRAW);
@@ -97,18 +115,27 @@ public class Lesson5_Coordinate : ILesson
         glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 5, (void*)(sizeof(float) * 3));
         glEnableVertexAttribArray(1);
 
-        var ibo = glGenBuffer();
-
-        var indices = PrimitiveUtil.GetRectIndices();
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
-        fixed (int* p = indices)
-        {
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.Length * sizeof(int), p, GL_STREAM_DRAW);
-        }
-
         glBindVertexArray(0);
         return vao;
     }
+
+    
+    vec3[] GetCubePos()
+    {
+        return new[]
+        {
+            new vec3( 0.0f,  0.0f,  0.0f),
+            new vec3( 2.0f,  5.0f, -15.0f),
+            new vec3(-1.5f, -2.2f, -2.5f),
+            new vec3(-3.8f, -2.0f, -12.3f),
+            new vec3( 2.4f, -0.4f, -3.5f),
+            new vec3(-1.7f,  3.0f, -7.5f),
+            new vec3( 1.3f, -2.0f, -2.5f),
+            new vec3( 1.5f,  2.0f, -2.5f),
+            new vec3( 1.5f,  0.2f, -1.5f),
+            new vec3(-1.3f,  1.0f, -1.5f) 
+        };
+    }
+   
+    
 }

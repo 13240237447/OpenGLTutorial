@@ -36,7 +36,7 @@ class Program
                 //设置清空的颜色
                 glClearColor(.2f, .3f, .3f, 1);
                 //清空当前颜色缓冲区
-                glClear(GL_COLOR_BUFFER_BIT);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
                 lesson.Draw(data);
 
