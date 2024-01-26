@@ -10,9 +10,14 @@ class Program
     static unsafe void Main(string[] args)
     {
         // Test();
-        LoadLesson(5);
+        LoadLesson(6);
     }
 
+    public static event Action<Window> OnProcessInput ; 
+
+    public static float DeltaTime { private set; get; }
+
+    private static double lastTime;
     private static void LoadLesson(int id)
     {
         var lesson = GetLesson(id);
@@ -25,13 +30,16 @@ class Program
             //设置OpenGL的渲染模式为核心渲染
             Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
 
-
             var window = GLUtil.CreateWindow(lesson, 800, 600);
 
             var data = lesson.PrepareData();
-
+            
+            DeltaTime = 0;
+            lastTime = Glfw.Time;
             while (!Glfw.WindowShouldClose(window))
             {
+                DeltaTime = (float)(Glfw.Time - lastTime);
+                lastTime = Glfw.Time;
                 ProcessInput(window);
                 //设置清空的颜色
                 glClearColor(.2f, .3f, .3f, 1);
@@ -85,6 +93,8 @@ class Program
         if (Glfw.GetKey(window, Keys.Escape) == InputState.Press)
         {
             Glfw.SetWindowShouldClose(window, true);
+            return;
         }
+        OnProcessInput.Invoke(window);
     }
 }

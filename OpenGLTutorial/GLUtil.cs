@@ -1,4 +1,5 @@
 using GLFW;
+using GlmNet;
 using Monitor = GLFW.Monitor;
 using static OpenGL.GL;
 
@@ -34,6 +35,11 @@ public static class GLUtil
     {
         var screen = Glfw.PrimaryMonitor.WorkArea;
         return screen.Width * 1.0f / screen.Height;
+    }
+
+    public static vec3 Normalized(this vec3 vec3)
+    {
+        return glm.normalize(vec3);
     }
     
 }
