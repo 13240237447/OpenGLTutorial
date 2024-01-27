@@ -1,24 +1,6 @@
 namespace OpenGL;
 using GlmNet;
 
-
-
-public struct Rotation
-{
-    public float pitch;
-
-    public float yaw;
-
-    public float roll;
-
-    public Rotation()
-    {
-        yaw = -90;
-        pitch = 0;
-        roll = 0;
-    }
-}
-
 public class Transform
 {
     public static vec3 WorldUp = new vec3(0, 1, 0);
@@ -34,21 +16,19 @@ public class Transform
     /// </summary>
     public vec3 Forward {private set; get; }
 
-
     public Rotation Rotator => rotator;
 
     private Rotation rotator;
     
     public vec3 SelfRight => glm.cross(Forward, WorldUp).Normalized();
 
-
     public vec3 SelfUp => glm.cross(-1 * Forward, SelfRight).Normalized();
-
 
     public Transform(vec3 pos, vec3 forward)
     {
         Position = pos;
         Forward = forward;
+        rotator.yaw = -90;
     }
 
     public void Translate(vec3 move)
