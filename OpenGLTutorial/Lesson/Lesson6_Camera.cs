@@ -19,15 +19,26 @@ public class Lesson6_Camera : ILesson
 
     private Shader shader;
 
+    private vec2 lastMouse;
+
+    private vec2 deltaMouseMove;
+
+
+    private bool isFirstMouse = true;
+
+    private float mouseMoveSisitivity = 0.2f;
+    
     public Lesson6_Camera()
     {
         Program.OnProcessInput += ProcessInput;
-        camera = new Camera(new vec3(0, 0, -10),Camera.WorldForward);
+        Program.OnMouseInput += ProcessMouse;
+        camera = new Camera(new vec3(0, 0, 3),Transform.WorldForward);
     }
 
     ~Lesson6_Camera()
     {
         Program.OnProcessInput -= ProcessInput;
+        Program.OnMouseInput -= ProcessMouse;
     }
 
     private void ProcessInput(Window window)
@@ -35,26 +46,44 @@ public class Lesson6_Camera : ILesson
         vec3? moveDir = null;
         if (Glfw.GetKey(window, Keys.W) == InputState.Press)
         {
-            moveDir = camera.Forward;
+            moveDir = camera.Transform.Forward;
         }
         else if (Glfw.GetKey(window, Keys.S) == InputState.Press)
         {
-            moveDir = camera.Forward * -1;
+            moveDir = camera.Transform.Forward * -1;
         }
         else if (Glfw.GetKey(window, Keys.A) == InputState.Press)
         {
-            moveDir = camera.Right * -1 ;
+            moveDir = camera.Transform.SelfRight * -1 ;
         }
         else if (Glfw.GetKey(window, Keys.D) == InputState.Press)
         {
-            moveDir = camera.Right ;
+            moveDir = camera.Transform.SelfRight ;
         }
 
         if (moveDir != null)
         {
+            moveDir = moveDir.Value.Normalized();
             float moveSpeed = 10f * Program.DeltaTime;
-            camera.Translate(moveDir.Value.Normalized() * moveSpeed);
+            camera.Transform.Translate(moveDir.Value * moveSpeed);
         }
+    }
+
+    private void ProcessMouse(float x, float y)
+    {
+        if (isFirstMouse)
+        {
+            isFirstMouse = false;
+            lastMouse.x = x;
+            lastMouse.y = y;
+        }
+        deltaMouseMove.x = x - lastMouse.x;
+        deltaMouseMove.y = lastMouse.y - y;
+        lastMouse.x = x;
+        lastMouse.y = y;
+
+        var offset = deltaMouseMove * mouseMoveSisitivity;
+        camera.SetOffset(offset.y,offset.x);
     }
     
     public object PrepareData()
@@ -119,7 +148,7 @@ public class Lesson6_Camera : ILesson
         // float camX = MathF.Sin((float)Glfw.Time) * radius;
         // float camZ = MathF.Cos((float)Glfw.Time) * radius;
         // mat4 m =  glm.lookAt(new vec3(camX, 0, camZ), new vec3(), new vec3(0, 1, 0));
-        mat4 m =  glm.lookAt(camera.Position, camera.Position + camera.Direction, Camera.WorldUp);
+        mat4 m =  glm.lookAt(camera.Transform.Position, camera.Transform.Position + camera.Transform.Forward, Transform.WorldUp);
         return m;
     }
     

@@ -13,7 +13,9 @@ class Program
         LoadLesson(6);
     }
 
-    public static event Action<Window> OnProcessInput ; 
+    public static event Action<Window> OnProcessInput; 
+    
+    public static event Action<float,float> OnMouseInput; 
 
     public static float DeltaTime { private set; get; }
 
@@ -29,8 +31,13 @@ class Program
             Glfw.WindowHint(Hint.ContextVersionMinor, 3);
             //设置OpenGL的渲染模式为核心渲染
             Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
+            
 
             var window = GLUtil.CreateWindow(lesson, 800, 600);
+
+            // Glfw.SetInputMode(window,InputMode.Cursor, (int)CursorMode.Disabled);
+            
+            Glfw.SetCursorPositionCallback(window, MouseCallback);
 
             var data = lesson.PrepareData();
             
@@ -96,5 +103,10 @@ class Program
             return;
         }
         OnProcessInput.Invoke(window);
+    }
+
+    static void MouseCallback(IntPtr window, double x, double y)
+    {
+        OnMouseInput?.Invoke((float)x,(float)y);
     }
 }
