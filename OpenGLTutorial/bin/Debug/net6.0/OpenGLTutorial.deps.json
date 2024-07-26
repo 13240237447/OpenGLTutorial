@@ -1,0 +1,69 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "OpenGLTutorial/1.0.0": {
+        "dependencies": {
+          "GlmNet": "0.7.0",
+          "GLFW.NET": "1.0.1.0",
+          "Stb.Native": "1.0.8786.524"
+        },
+        "runtime": {
+          "OpenGLTutorial.dll": {}
+        }
+      },
+      "GlmNet/0.7.0": {
+        "runtime": {
+          "lib/net40/GlmNet.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0"
+          }
+        }
+      },
+      "GLFW.NET/1.0.1.0": {
+        "runtime": {
+          "GLFW.NET.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      },
+      "Stb.Native/1.0.8786.524": {
+        "runtime": {
+          "Stb.Native.dll": {
+            "assemblyVersion": "1.0.8786.524",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "OpenGLTutorial/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GlmNet/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-g3EFJOV89dWppRVT5PJ8nVYWSEIoB4yqqEZy71ryb3mfxSGrvwqxsF+XbK+J0jUgSwRIYEWHqodvtd3LchlE+w==",
+      "path": "glmnet/0.7.0",
+      "hashPath": "glmnet.0.7.0.nupkg.sha512"
+    },
+    "GLFW.NET/1.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Stb.Native/1.0.8786.524": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

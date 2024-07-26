@@ -1,0 +1,128 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "GlmNet/0.7.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/GlmNet.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net40/GlmNet.dll": {
+            "related": ".XML"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GlmNet/0.7.0": {
+      "sha512": "g3EFJOV89dWppRVT5PJ8nVYWSEIoB4yqqEZy71ryb3mfxSGrvwqxsF+XbK+J0jUgSwRIYEWHqodvtd3LchlE+w==",
+      "type": "package",
+      "path": "glmnet/0.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "glmnet.0.7.0.nupkg.sha512",
+        "glmnet.nuspec",
+        "lib/net40/GlmNet.XML",
+        "lib/net40/GlmNet.dll"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "GlmNet >= 0.7.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/yangwenbo/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/yangwenbo/OpenGLTutorial/OpenGLTutorial/OpenGLTutorial.csproj",
+      "projectName": "OpenGLTutorial",
+      "projectPath": "/Users/yangwenbo/OpenGLTutorial/OpenGLTutorial/OpenGLTutorial.csproj",
+      "packagesPath": "/Users/yangwenbo/.nuget/packages/",
+      "outputPath": "/Users/yangwenbo/OpenGLTutorial/OpenGLTutorial/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/yangwenbo/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "dependencies": {
+          "GlmNet": {
+            "target": "Package",
+            "version": "[0.7.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.20, 6.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.osx-x64",
+            "version": "[6.0.20, 6.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.20, 6.0.20]"
+          }
+        ],
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'GlmNet 0.7.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "GlmNet",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="GLFW.NET">
+        <HintPath>GLFW.NET.dll</HintPath>
+      </Reference>
+      <Reference Include="Stb.Native">
+        <HintPath>Stb.Native.dll</HintPath>
+      </Reference>
+      <Reference Include="StbImageSharp">
+        <HintPath>StbImageSharp.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="GlmNet" Version="0.7.0" />
+    </ItemGroup>
+
+</Project>
